@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behind THE HACK | Cybersecurity Event 2026</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link href="https://fontsource.org/roboto-mono" rel="stylesheet">
+    <link href="https://fontsource.org/anton" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            dark: '#0f0518',
+                            purple: '#240b36',
+                            accent: '#FFD700',
+                            text: '#e0e0e0'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['"Roboto Mono"', 'monospace'],
+                        display: ['"Anton"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f0518;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f0518;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FFD700;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffea70;
+        }
+
+        /* Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0),
+                    rgba(255, 255, 255, 0) 50%,
+                    rgba(0, 0, 0, 0.1) 50%,
+                    rgba(0, 0, 0, 0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Glitch Text Effect */
+        .glitch-text {
+            position: relative;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0518;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(14px, 9999px, 122px, 0);
+            }
+
+            20% {
+                clip: rect(80px, 9999px, 9px, 0);
+            }
+
+            40% {
+                clip: rect(20px, 9999px, 88px, 0);
+            }
+
+            60% {
+                clip: rect(65px, 9999px, 13px, 0);
+            }
+
+            80% {
+                clip: rect(100px, 9999px, 5px, 0);
+            }
+
+            100% {
+                clip: rect(35px, 9999px, 90px, 0);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% {
+                clip: rect(65px, 9999px, 100px, 0);
+            }
+
+            20% {
+                clip: rect(10px, 9999px, 85px, 0);
+            }
+
+            40% {
+                clip: rect(90px, 9999px, 5px, 0);
+            }
+
+            60% {
+                clip: rect(15px, 9999px, 60px, 0);
+            }
+
+            80% {
+                clip: rect(50px, 9999px, 30px, 0);
+            }
+
+            100% {
+                clip: rect(5px, 9999px, 75px, 0);
+            }
+        }
+
+        /* Card Hover Effects */
+        .corner-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .corner-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.15);
+        }
+
+        .corner-card:hover .corner-img {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .corner-img {
+            transition: all 0.5s ease;
+        }
+
+        /* Button Glow */
+        .btn-glow {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Section Divider */
+        .cyber-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            margin: 4rem 0;
+            opacity: 0.3;
+        }
+
+        /* Read More Link Style */
+        .read-more-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid transparent;
+        }
+
+        .read-more-link:hover {
+            color: #fff;
+            border-bottom-color: #FFD700;
+            padding-left: 0.5rem;
+        }
+
+        .read-more-link svg {
+            transition: transform 0.3s ease;
+        }
+
+        .read-more-link:hover svg {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+
+<body class="font-mono antialiased selection:bg-cyber-accent selection:text-cyber-dark">
+
+    <!-- Scanline Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 bg-cyber-dark/90 backdrop-blur-md border-b border-white/10">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <!-- Club Logo -->
+                <img src="logo.png" alt="Cybersecurity Club Incubator" class="h-10 w-10 object-contain">
+                <div class="text-xl md:text-2xl font-display tracking-wider text-white hidden sm:block">
+                    BEHIND <span class="text-cyber-accent">THE HACK</span>
+                </div>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-bold tracking-widest">
+                <a href="#about" class="hover:text-cyber-accent transition-colors">ABOUT</a>
+                <a href="#corners" class="hover:text-cyber-accent transition-colors">CORNERS</a>
+                <a href="#experience" class="hover:text-cyber-accent transition-colors">EXPERIENCE</a>
+            </div>
+            <a href="#register"
+                class="px-6 py-2 border border-cyber-accent text-cyber-accent font-bold text-xs tracking-widest hover:bg-cyber-accent hover:text-cyber-dark transition-all">
+                REGISTER
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/13d8cba7b-c505-4c4f-9e8f-5d920a0e8bc2.png"
+                alt="Hero Background" class="w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 bg-gradient-to-b from-cyber-dark/50 via-cyber-dark/20 to-cyber-dark"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <!-- Supported By Badge -->
+            <div
+                class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-6 backdrop-blur-sm">
+                <img src="logo.png" alt="Incubator Logo" class="h-6 w-6 object-contain">
+                <span class="text-xs text-gray-300 tracking-wider">SUPPORTED BY <span
+                        class="text-cyber-accent font-bold">Sanad Youth </span></span>
+            </div>
+
+            <p class="text-cyber-accent tracking-[0.3em] text-sm md:text-base mb-4 animate-pulse">CYBER SECURITY CLUB
+                PRESENTS</p>
+            <h1 class="text-6xl md:text-8xl font-display text-white mb-6 glitch-text" data-text="Behind THE HACK">
+                Behind THE HACK
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-2 font-light">Explore the hidden world of IoT cyber threats
+            </p>
+            <p class="text-cyber-accent/80 text-sm md:text-base mb-10 tracking-wider uppercase">An interactive
+                cybersecurity experience</p>
+
+            <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <a href="#register"
+                    class="btn-glow px-8 py-4 bg-cyber-accent text-cyber-dark font-display text-xl tracking-wider clip-path-polygon">
+                    REGISTER NOW
+                </a>
+                <a href="#corners"
+                    class="btn-glow px-8 py-4 border border-white/30 text-white font-display text-xl tracking-wider hover:border-cyber-accent hover:text-cyber-accent">
+                    EXPLORE CORNERS
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-cyber-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Event Summary -->
+    <section id="about" class="py-20 bg-cyber-dark relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-display text-white mb-8">
+                    <span class="border-b-4 border-cyber-accent">EVENT OVERVIEW</span>
+                </h2>
+                <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                    Step into the digital battlefield. This is an interactive cybersecurity awareness event designed for
+                    students and tech enthusiasts.
+                    Participants will explore real-world IoT attacks through hands-on "corners", moving beyond theory to
+                    understand the mechanics of modern cyber threats.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-12">
+                    <div class="p-4 border border-white/10 bg-white/5 rounded">
+                        <div class="text-cyber-accent font-display text-2xl">100+</div>
+                        <div class="text-xs text-gray-500 mt-1">ATTENDEES</div>
+                    </div>
+                    <div class="p-4 border border-white/10 bg-white/5 rounded">
+                        <div class="text-cyber-accent font-display text-2xl">8</div>
+                        <div class="text-xs text-gray-500 mt-1">INTERACTIVE ZONES</div>
+                    </div>
+                    <div class="p-4 border border-white/10 bg-white/5 rounded">
+                        <div class="text-cyber-accent font-display text-2xl">2h</div>
+                        <div class="text-xs text-gray-500 mt-1">DURATION</div>
+                    </div>
+                    <div class="p-4 border border-white/10 bg-white/5 rounded">
+                        <div class="text-cyber-accent font-display text-2xl">100%</div>
+                        <div class="text-xs text-gray-500 mt-1">HANDS-ON</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Info Bar -->
+    <section class="py-10 border-y border-white/10 bg-cyber-purple/20">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-cyber-accent/10 flex items-center justify-center text-cyber-accent">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase tracking-widest">Date & Time</div>
+                        <div class="text-white font-bold">March 16, 2026 • 12:00 PM</div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-cyber-accent/10 flex items-center justify-center text-cyber-accent">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase tracking-widest">Location</div>
+                        <div class="text-white font-bold">Damascus • Digit-Main Hall</div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-cyber-accent/10 flex items-center justify-center text-cyber-accent">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase tracking-widest">Audience</div>
+                        <div class="text-white font-bold">Students & Tech Enthusiasts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 8 Corners -->
+    <section id="corners" class="py-24 bg-cyber-dark relative">
+        <div
+            class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-cyber-purple/20 to-transparent pointer-events-none">
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-cyber-accent tracking-[0.2em] text-sm font-bold">INTERACTIVE ZONES</span>
+                <h2 class="text-4xl md:text-5xl font-display text-white mt-2">THE 8 CORNERS</h2>
+                <div class="w-24 h-1 bg-cyber-accent mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Corner 1 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            01</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/1908dfa1a-0480-4425-b203-bcbc34f42b3a.png"
+                            alt="Overview" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            Cybersecurity Fields</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Overview of Network, App, Cloud Security &
+                            Forensics.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                <span class="text-xs text-green-500 font-bold">BEGINNER FRIENDLY</span>
+                            </div>
+                            <a href="#corner1" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corner 2 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            02</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/19fcde3f1-1241-4244-826c-3a1da1381904.png"
+                            alt="Phishing" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            Phishing Awareness</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Identify fake emails, URLs, and social
+                            engineering tactics.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                                <span class="text-xs text-yellow-500 font-bold">HIGH RISK</span>
+                            </div>
+                            <a href="#corner2" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corner 3 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            03</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/121945834-4474-417e-81fb-4137aa433375.png"
+                            alt="Password" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            Password Security</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Strong passwords, managers, and Multi-Factor
+                            Authentication.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                <span class="text-xs text-blue-500 font-bold">ESSENTIAL</span>
+                            </div>
+                            <a href="#corner3" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corner 4 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            04</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/1b9cd6afd-acb9-4671-adb8-5aad1170f723.png"
+                            alt="Web App" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            Web App Security</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">SQL Injection, XSS, and authentication flaws
+                            explained.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                <span class="text-xs text-red-500 font-bold">TECHNICAL</span>
+                            </div>
+                            <a href="#corner4" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corner 5 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            05</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/15a98a563-d116-46ba-820c-47f739bd6526.png"
+                            alt="OSINT" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            OSINT</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Open Source Intelligence: Collecting public data
+                            ethically.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                                <span class="text-xs text-purple-500 font-bold">INVESTIGATIVE</span>
+                            </div>
+                            <a href="#corner5" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corner 6 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            06</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/1d9a61d48-bb64-4829-8e78-dd2f42620c8e.png"
+                            alt="Malware" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            Malware Awareness</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Viruses, worms, ransomware: How they spread and
+                            stop them.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                <span class="text-xs text-red-500 font-bold">DANGEROUS</span>
+                            </div>
+                            <a href="#corner6" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corner 7 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            07</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/1102ac5f3-b9c9-40cf-8b8b-5070cbaec4dd.png"
+                            alt="SOC" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            SOC Operations</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Inside a Security Operations Center: Monitoring
+                            & Response.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
+                                <span class="text-xs text-cyan-500 font-bold">PROFESSIONAL</span>
+                            </div>
+                            <a href="#corner7" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corner 8 -->
+                <div class="corner-card bg-cyber-purple/40 rounded-xl overflow-hidden group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <div
+                            class="absolute top-2 right-2 z-10 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
+                            08</div>
+                        <img src="https://image.qwenlm.ai/public_source/95ff959e-f4df-4f9e-b6e1-1ec800500443/19f86fbe2-aeed-4ae9-9838-5e7718e08620.png"
+                            alt="IoT" class="corner-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3
+                            class="text-xl font-display text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                            IoT Security</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Botnets, Smart Home risks, and Critical
+                            Infrastructure threats.</p>
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                <span class="text-xs text-orange-500 font-bold">CRITICAL</span>
+                            </div>
+                            <a href="#corner8" class="read-more-link">
+                                Read More
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gradient-to-b from-cyber-dark to-cyber-purple/20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-display text-white mb-6">WHAT TO EXPECT</h2>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded bg-cyber-accent/20 flex items-center justify-center text-cyber-accent font-bold">
+                                1</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Live Demonstrations</h4>
+                                <p class="text-gray-400 text-sm">Watch real hacking tools in action (safely) to
+                                    understand the threat.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded bg-cyber-accent/20 flex items-center justify-center text-cyber-accent font-bold">
+                                2</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Hands-On Challenges</h4>
+                                <p class="text-gray-400 text-sm">Test your skills with mini-games and capture-the-flag
+                                    style puzzles.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded bg-cyber-accent/20 flex items-center justify-center text-cyber-accent font-bold">
+                                3</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Defense Strategies</h4>
+                                <p class="text-gray-400 text-sm">Learn practical steps to protect yourself and your
+                                    organization.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <div class="absolute inset-0 bg-cyber-accent blur-3xl opacity-20"></div>
+                    <div class="relative bg-black/40 border border-white/10 p-8 rounded-lg backdrop-blur-sm">
+                        <code class="text-sm text-green-400 font-mono block mb-2">> initializing_experience...</code>
+                        <code
+                            class="text-sm text-green-400 font-mono block mb-2">> loading_modules: [phishing, malware, iot]...</code>
+                        <code class="text-sm text-white font-mono block">> status: READY_FOR_PARTICIPANTS</code>
+                        <div class="mt-6 h-2 w-full bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-cyber-accent w-3/4 animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section id="register" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-cyber-accent/5"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h2 class="text-4xl md:text-6xl font-display text-white mb-6">READY TO HACK?</h2>
+            <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Join us for an unforgettable journey into the world
+                of cybersecurity. Seats are limited.</p>
+            <button
+                class="btn-glow px-10 py-5 bg-cyber-accent text-cyber-dark font-display text-2xl tracking-widest rounded-sm hover:scale-105 transition-transform">
+                REGISTER FOR EVENT
+            </button>
+            <p class="mt-6 text-sm text-gray-500">Limited spots available • Free for students</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-white/10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="logo.png" alt="Incubator Logo" class="h-8 w-8 object-contain">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-display text-white">BEHIND <span class="text-cyber-accent">THE
+                                HACK</span></h3>
+                        <p class="text-gray-500 text-xs mt-1">Cyber Awareness • IoT Security • Future Defense</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-white/5 text-center text-xs text-gray-600">
+                &copy; 2026 Cyber Security Club Incubator. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
